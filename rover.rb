@@ -38,17 +38,18 @@ class Rover
     @x = x.to_i
     @y = y.to_i
     @direction = direction_to_i(direction)
+    @errors = []
   end
 
   def move(commands)
-    commands.split("").each do |command|
+    commands.split("").each_with_index do |command, index|
       case command
       when 'M'
         do_move
       when 'L', 'R'
         rotate(command)
       else
-        #TODO raise error on wrong command
+        raise ArgumentError, "Unknown command \##{index} \'#{command}\'"
       end
     end
   end
@@ -63,7 +64,7 @@ class Rover
     x, y = coordinates_delta(@direction)
     @x += x
     @y += y
-    #TODO check out of bounds
+    check_out_of_bounds
   end
 
   def rotate(command)
@@ -72,5 +73,9 @@ class Rover
 
   def direction_name
     direction_to_s(@direction)
+  end
+
+  def check_out_of_bounds
+    raise RangeError, "Imminent Danger! Rover is out of plato bounds!" if @x > @plato.x or @y > @plato.y
   end
 end
