@@ -35,8 +35,11 @@ RSpec.describe Rover do
   end
 
   context 'moving out of plato' do
-    it 'raises Range Error' do
+    it 'raises Range Error on positive bounds' do
       expect { rover1.move("MMMMMMMMMMM") }.to raise_error(RangeError, "Imminent Danger! Rover is out of plato bounds!")
+    end
+    it 'raises Range Error on negative bounds' do
+      expect { rover1.move("LMMMMMMMMMMM") }.to raise_error(RangeError, "Imminent Danger! Rover is out of plato bounds!")
     end
   end
 end

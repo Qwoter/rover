@@ -76,6 +76,8 @@ class Rover
   end
 
   def check_out_of_bounds
-    raise RangeError, "Imminent Danger! Rover is out of plato bounds!" if @x > @plato.x or @y > @plato.y
+    if @x > @plato.x or @y > @plato.y or @x < 0 or @y < 0
+      raise RangeError, "Imminent Danger! Rover is out of plato bounds!"
+    end
   end
 end
